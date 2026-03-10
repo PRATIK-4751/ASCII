@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "asciify"
+version = "0.1.0"
+description = "Convert images and videos to ASCII art in your terminal"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "rajpr", email = "your@email.com" }]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "pillow",
+    "typer",
+    "rich",
+]
+keywords = ["ascii", "art", "terminal", "image", "video", "cli"]
+classifiers = [
+    "Development :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.optional-dependencies]
+video = ["opencv-python"]
+
+[project.scripts]
+asciify = "asciify:main"
+
+[project.urls]
+Homepage = "https://github.com/rajpr/asciify"
+Repository = "https://github.com/rajpr/asciify"
+
+[tool.hatch.build.targets.wheel]
+packages = ["asciify"]
