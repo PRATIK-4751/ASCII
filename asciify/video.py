@@ -40,7 +40,7 @@ class VideoConverter:
         except ImportError:
             print(
                 "Video support requires opencv.\n"
-                "Install it with: pip install 'asciify[video]'"
+                "Install it with: pip install 'asciify-art'"
             )
             sys.exit(1)
 
@@ -57,6 +57,7 @@ class VideoConverter:
         frame_count = 0
         art_height  = None
         out         = sys.stdout
+        preset_size = None
 
         out.write("\033[?25l")
         out.flush()
@@ -73,10 +74,12 @@ class VideoConverter:
                         continue
                     break
 
-                vid_h, vid_w = bgr.shape[:2]
-                out_w, out_h = _compute_output_size(
-                    vid_w, vid_h, self.width, None
-                )
+                if preset_size is None:
+                    vid_h, vid_w = bgr.shape[:2]
+                    preset_size = _compute_output_size(vid_w, vid_h, self.width, None)
+                
+                out_w, out_h = preset_size
+
                 bgr_resized = cv2.resize(
                     bgr, (out_w, out_h),
                     interpolation=cv2.INTER_LINEAR

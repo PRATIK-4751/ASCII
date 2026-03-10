@@ -1,27 +1,51 @@
+<h1 align="center">asciify-art</h1>
+
+<p align="center">
+  <strong>Convert images and videos to stunning ASCII and ANSI art right in your terminal!</strong>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/pypi/v/asciify-art.svg" alt="PyPI version">
+  <img src="https://img.shields.io/badge/python-3.10%2B-blue" alt="Supported Python versions">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
+</p>
+
+---
+
+`asciify-art` is a blazing fast command-line tool built in Python. Transform any image or video into beautiful text art with rich color support, various art styles, and incredibly optimized performance.
+
+## ✨ Features
+
+- **Single Install:** Everything is included—image and video processing works immediately.
+- **Multiple Styles:** Choose from classic ASCII, detailed character palettes, braille patterns, matrix falling code, and more!
+- **True Color Support:** Full 24-bit ANSI color formatting for foreground, background, or both.
+- **Video Playback:** Super smooth and optimized video rendering directly in your terminal/console.
+- **Image Processing Filters:** Tweak contrast, invert colors, or apply sharpen and edge enhance filters.
+
+## 🚀 Installation
+
+It's just one command away:
 
 ```bash
-pip install asciify
+pip install asciify-art
 ```
 
-For video support:
-```bash
-pip install 'asciify[video]'
-```
+*Note: The CLI command remains `asciify` for convenience and speed!*
 
-## Quick Start
+## 📖 Quick Start
 
 ```bash
-# Convert an image with default style
+# Convert a simple image
 asciify image photo.jpg
 
-# Use the blocks style with colored background
+# Apply the "blocks" style with a colored background
 asciify image photo.jpg -s blocks -c bg
 
-# List all available styles
+# View all available art styles
 asciify styles
 ```
 
-## Styles
+## 🎨 Styles
 
 | Style | Description | Best for |
 |-------|-------------|----------|
@@ -35,9 +59,9 @@ asciify styles
 | `shade` | Circle progression `·∘○◎●` | Smooth gradients |
 | `color` | True 24-bit ANSI | Full color output |
 
-## Examples
+## 💡 Examples
 
-### Image conversion
+### Image Conversion
 
 ```bash
 # Basic conversion
@@ -46,36 +70,36 @@ asciify image input.png
 # Detailed style with foreground color
 asciify image input.png -s detailed -c fg
 
-# Custom width and contrast
+# Custom width (80 characters) and high contrast
 asciify image input.png -w 80 --contrast 1.5
 
-# Save output to file
+# Save the output to a text file
 asciify image input.png -o output.txt
 ```
 
-### Video playback
+### Video Playback
 
 ```bash
-# Play video with default settings
+# Play a video with default settings
 asciify video clip.mp4
 
-# Matrix style at 15 FPS
+# Matrix style rendering at 15 FPS
 asciify video clip.mp4 -s matrix -f 15
 
-# Loop video with colored background
+# Loop a video infinitely with a distinct colored background
 asciify video clip.mp4 -c bg --loop
 ```
 
-### Color modes
+### Color Modes
 
-- `none` - Plain ASCII (default)
-- `fg` - Colored foreground text
-- `bg` - Colored background (pixel-like)
-- `both` - Foreground + dimmed background
+- `none` - Plain text (default)
+- `fg` - Colored foreground text characters
+- `bg` - Colored background cells (resembling pixel-art)
+- `both` - Foreground + dimmed background combination
 
-## Options
+## ⚙️ Options
 
-### Image command
+### Image Command Options
 
 | Option | Short | Description |
 |--------|-------|-------------|
@@ -88,7 +112,7 @@ asciify video clip.mp4 -c bg --loop
 | `--edge` | - | Apply edge enhance |
 | `--output` | `-o` | Save to file |
 
-### Video command
+### Video Command Options
 
 | Option | Short | Description |
 |--------|-------|-------------|
@@ -100,7 +124,9 @@ asciify video clip.mp4 -c bg --loop
 | `--invert` | `-i` | Invert brightness |
 | `--contrast` | - | Contrast multiplier (default: 1.2) |
 
-## Help
+## ❓ Help
+
+Need more details? Access built-in documentation anytime:
 
 ```bash
 asciify --help
@@ -108,6 +134,6 @@ asciify image --help
 asciify video --help
 ```
 
-## License
+## 📄 License
 
-MIT
+Distributed under the MIT License.

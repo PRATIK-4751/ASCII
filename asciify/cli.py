@@ -193,7 +193,7 @@ def cmd_styles():
 def cmd_version():
     try:
         from importlib.metadata import version
-        v = version("asciify")
+        v = version("asciify-art")
     except Exception:
         v = "unknown"
     console.print(f"asciify [bold cyan]{v}[/bold cyan]")

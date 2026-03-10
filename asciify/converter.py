@@ -91,7 +91,7 @@ def _build_color_frame(
     else:
         raise ValueError(f"Unknown color_mode '{color_mode}'. Use: fg, bg, both")
 
-    return "\n".join("".join(row) for row in cells)
+    return "\n".join(["".join(row) for row in cells])
 
 
 def render_frame(
@@ -116,7 +116,7 @@ def render_frame(
     char_grid  = pal_array[indices]
 
     if color_mode == "none":
-        return "\n".join("".join(row) for row in char_grid)
+        return "\n".join(["".join(row) for row in char_grid])
 
     return _build_color_frame(char_grid, r, g, b, color_mode)
 
