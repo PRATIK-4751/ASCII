@@ -1,11 +1,3 @@
-# asciify
-
-Convert images and videos to ASCII art in your terminal.
-
-![Python](https://img.shields.io/pypi/pyversions/asciify)
-![License](https://img.shields.io/github/license/rajpr/asciify)
-
-## Installation
 
 ```bash
 pip install asciify
