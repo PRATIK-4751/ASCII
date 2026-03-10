@@ -40,6 +40,12 @@ def _build_color_frame(
     color_mode: str,
 ) -> str:
     h, w = char_grid.shape
+    
+    # Boost brightness by 30%
+    brightness_boost = 1.3
+    r = np.clip(r * brightness_boost, 0, 255).astype(np.int32)
+    g = np.clip(g * brightness_boost, 0, 255).astype(np.int32)
+    b = np.clip(b * brightness_boost, 0, 255).astype(np.int32)
 
     if color_mode == "fg":
         prefix = (
@@ -62,7 +68,7 @@ def _build_color_frame(
         cells = np.char.add(prefix, " \033[0m")
 
     elif color_mode == "both":
-        dr, dg, db = r // 3, g // 3, b // 3
+        dr, dg, db = r // 2, g // 2, b // 2
         fg_part = (
             np.char.add(np.char.add(np.char.add(
                 np.char.add("\033[38;2;", r.astype(str)),

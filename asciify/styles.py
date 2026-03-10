@@ -9,7 +9,7 @@ PALETTE: dict[str, str] = {
     "matrix":   "ｦｧｨｩｪｫｬｭｮｯｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ",
     "dots":     " ·:;",
     "shade":    " ·∘○◎●",
-    "color":    "█",
+    "color":    " .:-=+*#%@",
 }
 
 @dataclass(frozen=True)
@@ -29,7 +29,7 @@ STYLES: dict[str, Style] = {
     "matrix":   Style("matrix",   "Katakana chars — Matrix aesthetic", "matrix"),
     "dots":     Style("dots",     "Minimal dot art",                   "dots"),
     "shade":    Style("shade",    "Circle shade progression",          "shade"),
-    "color":    Style("color",    "True 24-bit ANSI colour blocks",    "color",  color=True),
+    "color":    Style("color",    "True color with foreground ANSI codes (auto-enables-c fg)",    "color",  color=True),
 }
 
 

@@ -49,9 +49,9 @@ def cmd_image(
         "ascii", "--style", "-s",
         help="Art style. Run `asciify styles` to see all options.",
     ),
-    color_mode: str = typer.Option(
-        "none", "--color-mode", "-c",
-        help="Colour mode: none | fg | bg | both",
+    color_mode: Optional[str] = typer.Option(
+        None, "--color-mode", "-c",
+        help="Colour mode: none | fg | bg | both. Auto-enabled for 'color' style.",
     ),
     width: Optional[int] = typer.Option(
         None, "--width", "-w",
@@ -79,6 +79,14 @@ def cmd_image(
     ),
 ):
     _validate_style(style)
+    
+    # Auto-enable color mode for 'color' style
+    if color_mode is None:
+        if style == "color":
+            color_mode = "fg"
+        else:
+            color_mode = "none"
+    
     _validate_color_mode(color_mode)
 
     try:
@@ -102,7 +110,9 @@ def cmd_image(
         output.write_text(clean, encoding="utf-8")
         console.print(f"[green]Saved to[/green] {output}")
     else:
-        print(art)
+        sys.stdout.write(art)
+        sys.stdout.write("\n")
+        sys.stdout.flush()
 
 
 @app.command("video")
@@ -117,9 +127,9 @@ def cmd_video(
         "ascii", "--style", "-s",
         help="Art style. Run `asciify styles` to see all options.",
     ),
-    color_mode: str = typer.Option(
-        "none", "--color-mode", "-c",
-        help="Colour mode: none | fg | bg | both",
+    color_mode: Optional[str] = typer.Option(
+        None, "--color-mode", "-c",
+        help="Colour mode: none | fg | bg | both. Auto-enabled for 'color' style.",
     ),
     width: Optional[int] = typer.Option(
         None, "--width", "-w",
@@ -143,6 +153,14 @@ def cmd_video(
     ),
 ):
     _validate_style(style)
+    
+    # Auto-enable color mode for 'color' style
+    if color_mode is None:
+        if style == "color":
+            color_mode = "fg"
+        else:
+            color_mode = "none"
+    
     _validate_color_mode(color_mode)
 
     try:
