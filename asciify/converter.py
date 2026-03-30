@@ -42,56 +42,30 @@ def _build_color_frame(
     h, w = char_grid.shape
     
     # Boost brightness by 30%
-    brightness_boost = 1.3
-    r = np.clip(r * brightness_boost, 0, 255).astype(np.int32)
-    g = np.clip(g * brightness_boost, 0, 255).astype(np.int32)
-    b = np.clip(b * brightness_boost, 0, 255).astype(np.int32)
+    r = np.clip(r * 1.3, 0, 255).astype("int32").flatten()
+    g = np.clip(g * 1.3, 0, 255).astype("int32").flatten()
+    b = np.clip(b * 1.3, 0, 255).astype("int32").flatten()
+    chars = char_grid.flatten()
 
     if color_mode == "fg":
-        prefix = (
-            np.char.add(np.char.add(np.char.add(
-                np.char.add("\033[38;2;", r.astype(str)),
-                np.char.add(";", g.astype(str))),
-                np.char.add(";", b.astype(str))),
-                "m")
-        )
-        cells = np.char.add(np.char.add(prefix, char_grid), "\033[0m")
-
+        cells = [
+            f"\033[38;2;{rv};{gv};{bv}m{cv}\033[0m"
+            for rv, gv, bv, cv in zip(r, g, b, chars)
+        ]
     elif color_mode == "bg":
-        prefix = (
-            np.char.add(np.char.add(np.char.add(
-                np.char.add("\033[48;2;", r.astype(str)),
-                np.char.add(";", g.astype(str))),
-                np.char.add(";", b.astype(str))),
-                "m")
-        )
-        cells = np.char.add(prefix, " \033[0m")
-
+        cells = [
+            f"\033[48;2;{rv};{gv};{bv}m \033[0m"
+            for rv, gv, bv in zip(r, g, b)
+        ]
     elif color_mode == "both":
-        dr, dg, db = r // 2, g // 2, b // 2
-        fg_part = (
-            np.char.add(np.char.add(np.char.add(
-                np.char.add("\033[38;2;", r.astype(str)),
-                np.char.add(";", g.astype(str))),
-                np.char.add(";", b.astype(str))),
-                "m")
-        )
-        bg_part = (
-            np.char.add(np.char.add(np.char.add(
-                np.char.add("\033[48;2;", dr.astype(str)),
-                np.char.add(";", dg.astype(str))),
-                np.char.add(";", db.astype(str))),
-                "m")
-        )
-        cells = np.char.add(
-            np.char.add(np.char.add(bg_part, fg_part), char_grid),
-            "\033[0m"
-        )
-
+        cells = [
+            f"\033[48;2;{rv//2};{gv//2};{bv//2}m\033[38;2;{rv};{gv};{bv}m{cv}\033[0m"
+            for rv, gv, bv, cv in zip(r, g, b, chars)
+        ]
     else:
         raise ValueError(f"Unknown color_mode '{color_mode}'. Use: fg, bg, both")
 
-    return "\n".join(["".join(row) for row in cells])
+    return "\n".join(["".join(cells[i * w : (i + 1) * w]) for i in range(h)])
 
 
 def render_frame(
@@ -100,11 +74,11 @@ def render_frame(
     color_mode: str  = "none",
     invert:     bool = False,
 ) -> str:
-    r = rgb[:, :, 0].astype(np.int32)
-    g = rgb[:, :, 1].astype(np.int32)
-    b = rgb[:, :, 2].astype(np.int32)
+    r = rgb[:, :, 0]
+    g = rgb[:, :, 1]
+    b = rgb[:, :, 2]
 
-    lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255.0
+    lum = (r * 0.299 + g * 0.587 + b * 0.114) / 255.0
 
     if invert:
         lum = 1.0 - lum

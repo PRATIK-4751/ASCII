@@ -59,6 +59,12 @@ class VideoConverter:
         out         = sys.stdout
         preset_size = None
 
+        contrast_lut = None
+        if self.contrast != 1.0:
+            contrast_lut = np.clip(
+                (np.arange(256, dtype=np.float32) - 128) * self.contrast + 128, 0, 255
+            ).astype(np.uint8)
+
         out.write("\033[?25l")
         out.flush()
 
@@ -87,11 +93,8 @@ class VideoConverter:
 
                 rgb = cv2.cvtColor(bgr_resized, cv2.COLOR_BGR2RGB)
 
-                if self.contrast != 1.0:
-                    rgb = np.clip(
-                        (rgb.astype(np.float32) - 128) * self.contrast + 128,
-                        0, 255
-                    ).astype(np.uint8)
+                if contrast_lut is not None:
+                    rgb = cv2.LUT(rgb, contrast_lut)
 
                 art = render_frame(rgb, self.palette, self.color_mode, self.invert)
 

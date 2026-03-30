@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "asciify-art"
-version = "0.1.1"
+version = "0.1.0"
 description = "Convert images and videos to ASCII art in your terminal"
 readme = "README.md"
 license = { text = "MIT" }
@@ -15,7 +15,6 @@ dependencies = [
     "pillow",
     "typer",
     "rich",
-    "opencv-python",
 ]
 keywords = ["ascii", "art", "terminal", "image", "video", "cli"]
 classifiers = [
@@ -27,7 +26,8 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 
-
+[project.optional-dependencies]
+video = ["opencv-python"]
 
 [project.scripts]
 asciify-art = "asciify:main"
